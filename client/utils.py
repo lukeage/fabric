@@ -51,7 +51,7 @@ class Standalone:
             messages = [user_message]
         try:
             stream = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4-turbo-preview",
                 messages=messages,
                 temperature=0.0,
                 top_p=1,
@@ -98,14 +98,13 @@ class Standalone:
             messages = [user_message]
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4-turbo-preview",
                 messages=messages,
                 temperature=0.0,
                 top_p=1,
                 frequency_penalty=0.1,
                 presence_penalty=0.1,
             )
-            print(response)
             print(response.choices[0].message.content)
         except Exception as e:
             print(f"Error: {e}")
