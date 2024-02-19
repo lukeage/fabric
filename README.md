@@ -31,8 +31,10 @@
   - [Too many prompts](#too-many-prompts)
   - [The Fabric approach to prompting](#our-approach-to-prompting)
 - [Quickstart](#quickstart)
-  - [1. Just use the Patterns (Prompts)](#just-use-the-patterns)
-  - [2. Create your own Fabric Mill (Server)](#create-your-own-fabric-mill)
+  - [Setting up the fabric commands](#setting-up-the-fabric-commands)
+  - [Using the fabric client](#using-the-fabric-client)
+  - [Just use the Patterns](#just-use-the-patterns)
+  - [Create your own Fabric Mill](#create-your-own-fabric-mill)
 - [Structure](#structure)
   - [Components](#components)
   - [CLI-native](#cli-native)
@@ -43,11 +45,18 @@
 
 <br />
 
+> [!NOTE]  
+> February 16, 2024 — **It's now far easier to install and use Fabric!** Just head to the [Quickstart](#quickstart), install Poetry, and run `setup.sh`, and it'll do all the work for you!
+
+<br />
+
 ```bash
 # A quick demonstration of writing an essay with Fabric
 ```
 
-https://github.com/danielmiessler/fabric/assets/50654/09c11764-e6ba-4709-952d-450d70d76ac9
+<video src="https://github.com/danielmiessler/fabric/assets/50654/09c11764-e6ba-4709-952d-450d70d76ac9" controls>
+  Your browser does not support the video tag.
+</video>
 
 ## What and why
 
@@ -87,7 +96,7 @@ Fabric has Patterns for all sorts of life and work activities, including:
 - Getting summaries of long, boring content
 - Explaining code to you
 - Turning bad documentation into usable documentation
-- Create social media posts from any content input
+- Creating social media posts from any content input
 - And a million more…
 
 ### Our approach to prompting
@@ -112,11 +121,11 @@ https://github.com/danielmiessler/fabric/blob/main/patterns/extract_wisdom/syste
 
 The most feature-rich way to use Fabric is to use the `fabric` client, which can be found under <a href="https://github.com/danielmiessler/fabric/tree/main/client">`/client`</a> directory in this repository.
 
-### Setting up the `fabric` client
+### Setting up the fabric commands
 
-Follow these steps to get the client installed and configured.
+Follow these steps to get all fabric related apps installed and configured.
 
-1. Navigate to where you want the Fabric project to live on your systemClone the directory to a semi-permanent place on your computer.
+1. Navigate to where you want the Fabric project to live on your system in a semi-permanent place on your computer.
 
 ```bash
 # Find a home for Fabric
@@ -127,40 +136,52 @@ cd /where/you/keep/code
 
 ```bash
 # Clone Fabric to your computer
-git clone git@github.com:danielmiessler/fabric.git
+git clone https://github.com/danielmiessler/fabric.git
 ```
 
-3. Enter Fabric's /client directory
+3. Enter Fabric's main directory
 
 ```bash
-# Enter the project and its /client folder
-cd fabric/client
+# Enter the project folder (where you cloned it)
+cd fabric
 ```
 
-4. Install the dependencies
+4. Install poetry
+
+ref.: https://python-poetry.org/docs/#installing-with-the-official-installer
 
 ```bash
-# Install the pre-requisites
-pip3 install -r requirements.txt
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-5. Add the path to the `fabric` client to your shell
+5. Run the `setup.sh`, which will do the following:
+  - Installs python dependencies.
+  - Creates aliases in your OS. It should update `~/.bashrc`, `/.zshrc`, and `~/.bash_profile` if they are present in your file system.
 
 ```bash
-# Tell your shell how to find the `fabric` client
-echo 'alias fabric="/the/path/to/fabric/client" >> .bashrc'
-# Example of ~/.zshrc or ~/.bashrc
-alias fabric="~/Development/fabric/client/fabric"
+./setup.sh
 ```
 
-6. Restart your shell
+6. Restart your shell to reload everything.
+
+7. Set your `OPENAI_API_KEY`.
 
 ```bash
-# Make sure you can
-echo 'alias fabric="/the/path/to/fabric/client" >> .bashrc'
-# Example
-echo 'alias fabric="~/Development/fabric/client/fabric" >> .zshrc'
+fabric --setup
 ```
+
+You'll be asked to enter your OpenAI API key, which will be written to `~/.config/fabric/.env`. Patterns will then be downloaded from Github, which will take a few moments.
+
+8. Now you are up and running! You can test by pulling the help.
+
+```bash
+# Making sure the paths are set up correctly
+fabric --help
+```
+
+> [!NOTE]  
+> If you're using the `server` functions, `fabric-api` and `fabric-webui` need to be run in distinct terminal windows.
+
 
 ### Using the `fabric` client
 
@@ -190,14 +211,6 @@ options:
                         The pattern (prompt) to use
   --setup               Set up your fabric instance
 ```
-
-2. Set up the client
-
-```bash
-fabric --setup
-```
-
-You'll be asked to enter your OpenAI API key, which will be written to `~/.config/fabric/.env`. Patterns will then be downloaded from Github, which will take a few moments.
 
 #### Example commands
 
@@ -417,12 +430,17 @@ The content features a conversation between two individuals discussing various t
 - _Caleb Sima_ for pushing me over the edge of whether to make this a public project or not.
 - _Joel Parish_ for super useful input on the project's Github directory structure.
 - _Jonathan Dunn_ for spectacular work on the soon-to-be-released universal client.
+- _Joseph Thacker_ for the idea of a `-c` context flag that adds pre-created context in the `./config/fabric/` directory to all Pattern queries.
+- _Jason Haddix_ for the idea of a stitch (chained Pattern) to filter content using a local model before sending on to a cloud model, i.e., cleaning customer data using `llama2` before sending on to `gpt-4` for analysis.
+- _Dani Goland_ for enhancing the Fabric Server (Mill) infrastructure by migrating to FastAPI, breaking the server into discrete pieces, and Dockerizing the entire thing.
+- _Andre Guerra_ for simplifying installation by getting us onto Poetry for virtual environment and dependency management.
 
 ### Primary contributors
 
 <a href="https://github.com/danielmiessler"><img src="https://avatars.githubusercontent.com/u/50654?v=4" title="Daniel Miessler" width="50" height="50"></a>
 <a href="https://github.com/xssdoctor"><img src="https://avatars.githubusercontent.com/u/9218431?v=4" title="Jonathan Dunn" width="50" height="50"></a>
 <a href="https://github.com/sbehrens"><img src="https://avatars.githubusercontent.com/u/688589?v=4" title="Scott Behrens" width="50" height="50"></a>
+<a href="https://github.com/agu3rra"><img src="https://avatars.githubusercontent.com/u/10410523?v=4" title="Andre Guerra" width="50" height="50"></a>
 
 `fabric` was created by <a href="https://danielmiessler.com/subscribe" target="_blank">Daniel Miessler</a> in January of 2024.
 <br /><br />

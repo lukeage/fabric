@@ -1,12 +1,10 @@
-# Source https://github.com/github/gitignore/blob/main/Python.gitignore
+# macOS local stores
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Virtual Environments
-client/source/
-client/.zshrc
 
 # C extensions
 *.so
@@ -126,8 +124,8 @@ celerybeat.pid
 
 # Environments
 .env
+.venv
 env/
-.venv/
 venv/
 ENV/
 env.bak/
